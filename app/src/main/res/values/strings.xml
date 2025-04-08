@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">Assessement 1</string>
+    <string name="app_name">Si Hemat</string>
+    <string name="harga">Price</string>
+    <string name="intro">Let’s calculate the discount for the item you want to buy based on the available categories! Please enter the following information:</string>
+    <string name="diskon">Discount</string>
+    <string name="kategori">Category</string>
+    <string name="umum">General</string>
+    <string name="makanan">Food</string>
+    <string name="elekronik">Electronics</string>
+    <string name="ppn">11% VAT</string>
+    <string name="hasil">Price after discount:</string>
+    <string name="hemat">Amount saved:</string>
+    <string name="akhir">Final total (11% VAT):</string>
+    <string name="kembali">Back</string>
+    <string name="bagikan">Share</string>
+    <string name="bagikan_template">Price after discount:\nAmount saved:\nFinal total (11% VAT):</string>
+    <string name="input_invalid">Cannot be empty.</string>
+    <string name="tentang_aplikasi">About the App</string>
+    <string name="copyright">This app helps calculate the final price of an item after applying discounts and 11% VAT based on categories like General, Food, and Electronics. Simply enter the price, discount, and category, and the app will display the final price and the amount saved.\n\nThis app was created as part of Assessment 1 for the Mobile Programming 1 course.\n\nCopyright © 2024–2025 Alfina Azizah.\nAll rights reserved.
+</string>
+
 </resources>
