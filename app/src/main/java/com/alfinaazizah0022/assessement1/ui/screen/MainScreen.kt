@@ -3,12 +3,17 @@ package com.alfinaazizah0022.assessement1.ui.screen
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,6 +31,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -62,7 +68,11 @@ fun MainScreen() {
 fun ScreenContent(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var harga by remember { mutableStateOf("") }
+    var hargaError by remember { mutableStateOf(false) }
+
     var diskon by remember { mutableStateOf("") }
+    var diskonError by remember { mutableStateOf(false) }
+
     var selectedCategoryResId by remember { mutableIntStateOf(R.string.umum) }
     var hasil by remember { mutableStateOf("") }
     var hemat by remember { mutableStateOf("") }
@@ -70,8 +80,11 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
 
     Column (
-        modifier = modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        modifier = modifier.fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(
             text = stringResource(id = R.string.intro),
@@ -82,7 +95,9 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             value = harga,
             onValueChange = { harga = it},
             label = { Text(text = stringResource(R.string.harga)) },
-            trailingIcon = { Text(text = "IDR") },
+            trailingIcon = { IconPicker(hargaError, "IDR") },
+            supportingText = { ErrorHint(hargaError) },
+            isError = hargaError,
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -94,7 +109,9 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             value = diskon,
             onValueChange = { diskon = it},
             label = { Text(text = stringResource(R.string.diskon)) },
-            trailingIcon = { Text(text = "%") },
+            trailingIcon = { IconPicker(diskonError, "%") },
+            supportingText = { ErrorHint(diskonError) },
+            isError = diskonError,
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -106,26 +123,53 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             selectedCategoryResId = selectedCategoryResId,
             onCategorySelected = { selectedCategoryResId = it}
         )
-        Button(onClick = {
-            val hargaValue = harga.toDoubleOrNull() ?: 0.0
-            val diskonValue = diskon.toDoubleOrNull() ?: 0.0
-            val potonganInput = hargaValue * (diskonValue / 100)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            Button(onClick = {
+                hargaError = (harga == "" || harga == "0")
+                diskonError = (diskon == "" || diskon == "0")
+                if (hargaError || diskonError) return@Button
 
-            val kategoriDiskon = when (selectedCategoryResId) {
-                R.string.makanan -> 0.05
-                R.string.elektronik -> 0.10
-                else -> 0.0
+                val hargaValue = harga.toDoubleOrNull() ?: 0.0
+                val diskonValue = diskon.toDoubleOrNull() ?: 0.0
+                val potonganInput = hargaValue * (diskonValue / 100)
+
+                val kategoriDiskon = when (selectedCategoryResId) {
+                    R.string.makanan -> 0.05
+                    R.string.elektronik -> 0.10
+                    else -> 0.0
+                }
+                val potonganKategori = hargaValue * kategoriDiskon
+                val totalPotongan = potonganInput + potonganKategori
+                val total = hargaValue - totalPotongan
+
+                hasil = context.getString(R.string.hasil, currencyFormatter.format(total))
+                hemat = context.getString(R.string.hemat, currencyFormatter.format(totalPotongan))
+
+            },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(R.string.hitung))
             }
-            val potonganKategori = hargaValue * kategoriDiskon
-            val totalPotongan = potonganInput + potonganKategori
-            val total = hargaValue - totalPotongan
-
-            hasil = context.getString(R.string.hasil, currencyFormatter.format(total))
-            hemat = context.getString(R.string.hemat, currencyFormatter.format(totalPotongan))
-
-        }) {
-            Text(text = stringResource(R.string.hitung))
+            Button(
+                onClick = {
+                    harga = ""
+                    diskon = ""
+                    hasil= ""
+                    hemat = ""
+                    hargaError = false
+                    diskonError = false
+                    selectedCategoryResId = R.string.umum
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = "Reset")
+            }
         }
+
         if (hasil.isNotEmpty()) {
             Text(text = hasil)
             Text(text = hemat)
@@ -175,6 +219,22 @@ fun CategoryDropdown(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun IconPicker(isError: Boolean, unit: String) {
+    if (isError) {
+        Icon(imageVector = Icons.Filled.Warning, contentDescription = null)
+        } else {
+            Text(text = unit)
+    }
+}
+
+@Composable
+fun ErrorHint(isError: Boolean) {
+    if (isError) {
+        Text(text = stringResource(R.string.input_invalid))
     }
 }
 
