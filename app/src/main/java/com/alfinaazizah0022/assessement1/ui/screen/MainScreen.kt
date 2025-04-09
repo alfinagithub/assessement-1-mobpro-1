@@ -1,5 +1,7 @@
 package com.alfinaazizah0022.assessement1.ui.screen
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,6 +21,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,7 +45,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.alfinaazizah0022.assessement1.R
@@ -163,8 +165,8 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                 val totalPotongan = potonganInput + potonganKategori
                 val total = hargaValue - totalPotongan
 
-                hasil = context.getString(R.string.hasil, currencyFormatter.format(total))
-                hemat = context.getString(R.string.hemat, currencyFormatter.format(totalPotongan))
+                hasil = currencyFormatter.format(total)
+                hemat = currencyFormatter.format(totalPotongan)
 
             },
                 modifier = Modifier.padding(top = 8.dp),
@@ -190,8 +192,32 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         }
 
         if (hasil.isNotEmpty()) {
-            Text(text = hasil)
-            Text(text = hemat)
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 8.dp),
+                thickness = 1.dp
+            )
+            Text(
+                text = stringResource(R.string.hasil, hasil),
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                text = stringResource(R.string.hemat, hemat ),
+                style = MaterialTheme.typography.titleLarge
+            )
+            Button(
+                onClick = {
+                    shareData(
+                        context = context,
+                        message = context.getString(R.string.bagikan_template,
+                            harga, diskon, context.getString(selectedCategoryResId).uppercase(),
+                            hasil, hemat)
+                    )
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(R.string.bagikan))
+            }
         }
     }
 }
@@ -255,6 +281,15 @@ fun ErrorHint(isError: Boolean) {
     if (isError) {
         Text(text = stringResource(R.string.input_invalid))
     }
+}
+
+private fun shareData(context: Context, message: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) != null)
+        context.startActivity(shareIntent)
 }
 
 @Preview(showBackground = true)

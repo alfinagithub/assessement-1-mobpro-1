@@ -14,7 +14,7 @@
     <string name="akhir">Final total (11% VAT): %1$s</string>
     <string name="kembali">Back</string>
     <string name="bagikan">Share</string>
-    <string name="bagikan_template">Price after discount:\nAmount saved:\nFinal total (11% VAT):</string>
+    <string name="bagikan_template">Price: %1$s\nDiscount: %2$s\nCategory: %3$s\n\nPrice after discount:  %4$s\nAmount saved: %5$s</string>
     <string name="input_invalid">Cannot be empty.</string>
     <string name="tentang_aplikasi">About the App</string>
     <string name="copyright">This app helps calculate the final price of an item after applying discounts and 11% VAT based on categories like General, Food, and Electronics. Simply enter the price, discount, and category, and the app will display the final price and the amount saved.\n\nThis app was created as part of Assessment 1 for the Mobile Programming 1 course.\n\nCopyright © 2024–2025 Alfina Azizah.\nAll rights reserved.

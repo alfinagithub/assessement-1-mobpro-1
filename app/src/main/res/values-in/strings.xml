@@ -15,7 +15,7 @@
     <string name="akhir">Total akhir(PPN 11%): %1$s</string>
     <string name="kembali">Kembali</string>
     <string name="bagikan">Bagikan</string>
-    <string name="bagikan_template">\Harga setelah diskon:\nUang yang dihemat:\nTotal akhir(PPN 11%):</string>
+    <string name="bagikan_template">\Harga: %1$s\nDiskon: %2$s\nKategori: %3$s\n\nHarga setelah diskon: %4$s\nUang yang dihemat: %5$s</string>
     <string name="input_invalid">Tidak boleh kosong.</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
     <string name="copyright">Aplikasi ini membantu menghitung harga barang setelah diskon dan PPN 11% berdasarkan
