@@ -3,21 +3,25 @@ package com.alfinaazizah0022.assessement1.ui.screen
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -39,7 +43,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -67,13 +73,33 @@ fun MainScreen(navController: NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 actions = {
-                    IconButton(onClick = {
-                        navController.navigate(Screen.About.route)
-                    }) {
+                    var expanded by remember { mutableStateOf(false) }
+
+                    IconButton(onClick = { expanded = true}) {
                         Icon(
-                            imageVector = Icons.Outlined.Info,
-                            contentDescription = stringResource(R.string.tentang_aplikasi),
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = stringResource(R.string.menu_lainnya),
                             tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false}
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.tentang_aplikasi)) },
+                            onClick = {
+                                expanded = false
+                                navController.navigate(Screen.About.route)
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.tentang_saya)) },
+                            onClick = {
+                                expanded = false
+                                navController.navigate(Screen.AboutMe.route)
+                            }
                         )
                     }
                 }
@@ -107,6 +133,12 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = stringResource(R.string.logo),
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.width(300.dp).height(240.dp)
+        )
         Text(
             text = stringResource(id = R.string.intro),
             style = MaterialTheme.typography.bodyLarge,
@@ -209,7 +241,8 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                     shareData(
                         context = context,
                         message = context.getString(R.string.bagikan_template,
-                            harga, diskon, context.getString(selectedCategoryResId).uppercase(),
+                            "Rp$harga",
+                            "$diskon%", context.getString(selectedCategoryResId).uppercase(),
                             hasil, hemat)
                     )
                 },
