@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Assessement 1</string>
+    <string name="app_name">Si Hemat</string>
     <string name="intro">Ayo hitung diskon harga dari barang yang ingin kamu beli berdasarkan kategori yang tersedia! Silakan masukkan data berikut:</string>
     <string name="harga">Harga</string>
     <string name="diskon">Diskon</string>

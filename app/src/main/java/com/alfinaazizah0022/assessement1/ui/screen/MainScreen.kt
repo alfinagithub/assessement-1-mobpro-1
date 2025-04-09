@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -84,15 +85,16 @@ fun MainScreen(navController: NavHostController) {
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    var harga by remember { mutableStateOf("") }
-    var hargaError by remember { mutableStateOf(false) }
+    var harga by rememberSaveable { mutableStateOf("") }
+    var hargaError by rememberSaveable { mutableStateOf(false) }
 
-    var diskon by remember { mutableStateOf("") }
-    var diskonError by remember { mutableStateOf(false) }
+    var diskon by rememberSaveable { mutableStateOf("") }
+    var diskonError by rememberSaveable { mutableStateOf(false) }
 
-    var selectedCategoryResId by remember { mutableIntStateOf(R.string.umum) }
-    var hasil by remember { mutableStateOf("") }
-    var hemat by remember { mutableStateOf("") }
+    var selectedCategoryResId by rememberSaveable { mutableIntStateOf(R.string.umum) }
+
+    var hasil by rememberSaveable { mutableStateOf("") }
+    var hemat by rememberSaveable { mutableStateOf("") }
 
     val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
 
