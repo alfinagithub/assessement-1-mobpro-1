@@ -8,10 +8,8 @@
     <string name="makanan">Food(Discount 5%)</string>
     <string name="elektronik">Electronics(Discount 10%)</string>
     <string name="hitung">Count</string>
-    <string name="ppn">11% VAT</string>
     <string name="hasil">Price after discount: %1$s</string>
     <string name="hemat">Amount saved: %1$s</string>
-    <string name="akhir">Final total (11% VAT): %1$s</string>
     <string name="kembali">Back</string>
     <string name="menu_lainnya">Menu</string>
     <string name="tentang_saya">About Me</string>
@@ -21,7 +19,7 @@
     <string name="bagikan_template">Price: %1$s\nDiscount: %2$s\nCategory: %3$s\n\nPrice after discount:  %4$s\nAmount saved: %5$s</string>
     <string name="input_invalid">Cannot be empty.</string>
     <string name="tentang_aplikasi">About App</string>
-    <string name="copyright">This app helps calculate the final price of an item after applying discounts and 11% VAT based on categories like General, Food, and Electronics. Simply enter the price, discount, and category, and the app will display the final price and the amount saved.\n\nThis app was created as part of Assessment 1 for the Mobile Programming 1 course.\n\nCopyright © 2024–2025 Alfina Azizah.\nAll rights reserved.
+    <string name="copyright">This app helps calculate the final price of an item after applying discounts based on categories like General, Food, and Electronics. Simply enter the price, discount, and category, and the app will display the final price and the amount saved.\n\nThis app was created as part of Assessment 1 for the Mobile Programming 1 course.\n\nCopyright © 2024–2025 Alfina Azizah.\nAll rights reserved.
 </string>
 
 </resources>

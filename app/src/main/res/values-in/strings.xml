@@ -9,10 +9,8 @@
     <string name="makanan">Makanan(Diskon 5%)</string>
     <string name="elektronik">Elektronik(Diskon 10%)</string>
     <string name="hitung">Hitung</string>
-    <string name="ppn">PPN 11%</string>
     <string name="hasil">Harga setelah diskon: %1$s</string>
     <string name="hemat">Uang yang dihemat: %1$s</string>
-    <string name="akhir">Total akhir(PPN 11%): %1$s</string>
     <string name="kembali">Kembali</string>
     <string name="logo">Logo</string>
     <string name="bagikan">Bagikan</string>
@@ -22,7 +20,7 @@
     <string name="input_invalid">Tidak boleh kosong.</string>
     <string name="biodata">Nama: Alfina Azizah\n\nNIM: 607062330022</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
-    <string name="copyright">Aplikasi ini membantu menghitung harga barang setelah diskon dan PPN 11% berdasarkan
+    <string name="copyright">Aplikasi ini membantu menghitung harga barang setelah diskon berdasarkan
         kategori seperti Umum, Makanan, dan Elektronik. Cukup masukkan harga, diskon, dan kategori, lalu
         aplikasi akan menampilkan harga akhir dan jumlah yang dihemat.\n\nAplikasi ini dibuat untuk
         mengerjakan Assessement 1 dari Mata Kuliah Pemrograman untuk Perangkat Bergerak 1. \n\nCopyright © 2024-2025 Alfina Azizah.
